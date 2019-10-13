@@ -6,8 +6,8 @@ using namespace std;
 
 void main()
 {
-	TVector<int> a(3, 0), b(3, 0);
-	TMatrix<int> c(3), d(3);
+	TVector<double> a(3, 0), b(3, 0);
+	TMatrix<double> c(3), d(3);
 	////////////////////////////////// fill M, M
 	try
 	{
@@ -33,7 +33,7 @@ void main()
 	try
 	{
 		cout << "c + d = " << '\n';
-		TMatrix<int> res = c + d;
+		TMatrix<double> res = c + d;
 		cout << res << '\n';
 	}
 	catch(const char* s)
@@ -44,7 +44,7 @@ void main()
 	try
 	{
 		cout << "c - d = " << '\n';
-		TMatrix<int> res = c - d;
+		TMatrix<double> res = c - d;
 		cout << res << '\n';
 	}
 	catch(const char* s)
@@ -55,7 +55,7 @@ void main()
 	try
 	{
 		cout << "c * d = " << '\n';
-		TMatrix<int> res = c * d;
+		TMatrix<double> res = c * d;
 		cout << res << '\n';
 	}
 	catch(const char* s)
@@ -63,7 +63,7 @@ void main()
 		cout << s << endl;
 	}
 	//////////////////////////////////////// M + a
-	TMatrix<int> res = c + 2;
+	TMatrix<double> res = c + 2;
 	cout << "c + 2 = " << '\n' << res << '\n';
 	//////////////////////////////////////// M - a
 	res = c - 2;
@@ -108,7 +108,7 @@ void main()
 	try
 	{
 		cout << "c * a = ";
-		TVector<int> res = c * a;
+		TVector<double> res = c * a;
 		cout << res << '\n';
 	}
 	catch(const char* s)
@@ -123,7 +123,7 @@ void main()
 	try
 	{
 		cout << "a + b = ";
-		TVector<int> res = a + b;
+		TVector<double> res = a + b;
 		cout << res << '\n';
 	}
 	catch(const char* s)
@@ -134,7 +134,7 @@ void main()
 	try
 	{
 		cout << "a - b = ";
-		TVector<int> res = a - b;
+		TVector<double> res = a - b;
 		cout << res << '\n';
 	}
 	catch(const char* s)
@@ -153,7 +153,7 @@ void main()
 		cout << s << endl;
 	}
 	//////////////////////////////////////// v + a
-	TVector<int> ress = a + 2;
+	TVector<double> ress = a + 2;
 	cout << "a + 2 = " << ress << '\n';
 	//////////////////////////////////////// v - a
 	ress = a - 2;
@@ -161,4 +161,8 @@ void main()
 	//////////////////////////////////////// v * a
 	ress = a * 2;
 	cout << "a * 2 = " << ress << '\n';
+	//////////////////////////////////////// v == v
+	if (a == b)
+		cout << "a == b" << '\n';
+	else cout << "a != b" << '\n';
 }
