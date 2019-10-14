@@ -2,9 +2,10 @@
 #define TVECTOR_H
 
 #include <iostream>
-#include "TMatrix.h"
-
 using namespace std;
+
+template<typename ValueType>
+class TMatrix;
 
 template <typename ValueType>
 class TVector
@@ -32,22 +33,16 @@ public:
 
 	const ValueType& operator[] (int ind) const;
 	ValueType& operator[] (int ind);
-
+	
 	friend istream& operator >> (istream& input, TVector& z)
 	{
 		for (int i = 0; i < z.size; i++)
         input >> z.x[i];
-
     return input;
 	}
 
 	friend ostream& operator << (ostream& output, const TVector& z)
 	{
-		if (z.size == 0)
-    {
-        output << "Empty";
-        return output;
-    }
     output << "(";
     for (int i = 0; i < z.size; i++)
     {
@@ -58,7 +53,7 @@ public:
     }
     return output;
 	}
-	
+
 	friend TMatrix<ValueType>;
 };
 
@@ -178,7 +173,6 @@ template <typename ValueType>
 bool TVector<ValueType>::operator == (const TVector<ValueType>& z) const
 {
 	if (size != z.size) return false;
-	if (StartIndex != z.StartIndex) return false;
 	int f = 0;
 	for (int i = 0; i < size; i++)
 	{
