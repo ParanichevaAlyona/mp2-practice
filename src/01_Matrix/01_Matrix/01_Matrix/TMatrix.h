@@ -162,3 +162,23 @@ TVector<ValueType> TMatrix<ValueType>::operator * (const TVector<ValueType>& v)
 		}
 	return res;
 }
+
+template <typename ValueType>
+bool TMatrix<ValueType>::operator == (const TMatrix<ValueType>& m) const
+{
+	if (this->size != m.size)
+		return false;
+	for(int i = 0; i < size; i++)
+		if (x[i] != m.x[i])
+			return false;
+	return true;
+}
+
+template <typename ValueType>
+bool TMatrix<ValueType>::operator != (const TMatrix<ValueType>& m) const
+{
+	if (!(*this == m)) return true;
+	return false;
+}
+
+#endif
