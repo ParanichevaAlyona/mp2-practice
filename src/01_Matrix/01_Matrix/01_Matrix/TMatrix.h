@@ -26,10 +26,6 @@ public:
 
 	friend istream& operator >> (istream& input, TMatrix& m)
 	{
-		if (m.size == 0)
-		{
-			throw "Size = 0";
-		}
 		for (int i = 0; i < m.size; i++)
 			input >> m.x[i];
 		return input;
@@ -37,11 +33,6 @@ public:
 
 	friend ostream& operator << (ostream& output, const TMatrix& m)
 	{
-		if (m.size == 0)
-		{
-			output << "Size = 0";
-			return output;
-		}
 		for (int i = 0; i < m.size; i++)
 		{
 			output << m.x[i] << '\n';
@@ -171,23 +162,3 @@ TVector<ValueType> TMatrix<ValueType>::operator * (const TVector<ValueType>& v)
 		}
 	return res;
 }
-
-template <typename ValueType>
-bool TMatrix<ValueType>::operator == (const TMatrix<ValueType>& m) const
-{
-	if (this->size != m.size)
-		return false;
-	for(int i = 0; i < size; i++)
-		if (x[i] != m.x[i])
-			return false;
-	return true;
-}
-
-template <typename ValueType>
-bool TMatrix<ValueType>::operator != (const TMatrix<ValueType>& m) const
-{
-	if (!(*this == m)) return true;
-	return false;
-}
-
-#endif
