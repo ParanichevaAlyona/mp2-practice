@@ -48,7 +48,7 @@ template <typename ValueType>
 TMatrix<ValueType>::TMatrix(int _size):TVector<TVector<ValueType> >(_size)
 {
 	size = _size;
-	for(int i = 0; i < size; i++)
+	for(int i = 0; i < this->size; i++)
 		this->x[i] = TVector<ValueType>(size - i, i);
 }
 
@@ -71,12 +71,13 @@ TMatrix<ValueType> TMatrix<ValueType>::operator = (const TMatrix& m)
 	{
 		return *this; 
 	}
-    ///
-	delete[] this->x;
-	this->size = m.size;
-	this->x = new TVector<ValueType>[m.size];
-    ///
-	for(int i = 0; i < size; i++)
+	if (this->size != m.size)
+	{
+		delete[] this->x;
+		this->size = m.size;
+		this->x = new TVector<ValueType>[m.size];
+	}
+	for(int i = 0; i < this->size; i++)
 	{
 		this->x[i] = m.x[i];
 	}
@@ -105,7 +106,7 @@ template <typename ValueType>
 TMatrix<ValueType> TMatrix<ValueType>::operator * (const ValueType a)
 {
 	TMatrix res(*this);
-	for(int i = 0; i < size; i++)
+	for(int i = 0; i < res.size; i++)
 		res.x[i] = x[i] * a;
 	return res;
 }
@@ -127,7 +128,7 @@ TMatrix<ValueType> TMatrix<ValueType>::operator - (const TMatrix<ValueType>& m)
 	if (this->size != m.size)
 		throw "Different size";
 	TMatrix<ValueType> res(*this);
-	for(int i = 0; i < size; i++)
+	for(int i = 0; i < res.size; i++)
 		res.x[i] = this->x[i] - m.x[i];
 	return res;
 }
@@ -171,7 +172,7 @@ bool TMatrix<ValueType>::operator == (const TMatrix<ValueType>& m) const
 {
 	if (this->size != m.size)
 		return false;
-	for(int i = 0; i < size; i++)
+	for(int i = 0; i < this->size; i++)
 		if (x[i] != m.x[i])
 			return false;
 	return true;
