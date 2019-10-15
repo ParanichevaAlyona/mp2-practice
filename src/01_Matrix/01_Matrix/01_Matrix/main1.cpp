@@ -1,4 +1,5 @@
 #include <iostream>
+#include <iomanip>
 #include "TVector.h"
 #include "TMatrix.h"
 
@@ -9,26 +10,13 @@ void main()
 	TVector<double> a(3, 0), b(3, 0);
 	TMatrix<double> c(3), d(3);
 	////////////////////////////////// fill M, M
-	try
-	{
-		cout << "Enter the elements of matrix 'c'" << '\n';
-		cin >> c;
-		cout << "c" << c << '\n';
-	}
-	catch(const char* s)
-	{
-		cout << s << endl;
-	}
-	try
-	{
-		cout << "Enter the elements of matrix 'd'" << '\n';
-		cin >> d;
-		cout << "d" << d << '\n';
-	}
-	catch(const char* s)
-	{
-		cout << s << endl;
-	}
+	cout << "Enter the elements of matrix 'c'" << '\n';
+	cin >> c;
+	cout << "c" << '\n' << c << '\n';
+
+	cout << "Enter the elements of matrix 'd'" << '\n';
+	cin >> d;
+	cout << "d" << '\n' << d << '\n';
 	/////////////////////////////////////////// M + M
 	try
 	{
@@ -72,38 +60,22 @@ void main()
 	res = c * 2;
 	cout << "c * 2 = " << '\n' << res << '\n';
 	//////////////////////////////////////// M == M
-	try
-	{
-		if (c == d)
-			cout << "c = d" << '\n';
-		if (c != d) 
-			cout << "c != d" << '\n';
-	}
-	catch(const char* s)
-	{
-		cout << s << endl;
-	}
+
+	if (c == d)
+		cout << "c = d" << '\n';
+	if (c != d) 
+		cout << "c != d" << '\n';
+	res = c;
+	cout << "res = M" << res << '\n';
+
 	//////////////////////////////////////// fill v, v
-	try
-	{
-		cout << "Enter elements of vector 'a'" << '\n'; 
-		cin >> a;
-		cout << "a" << a << '\n';
-	}
-	catch(const char* s)
-	{
-		cout << s << endl;
-	}
-	try
-	{
-		cout << "Enter elements of vector 'b'" << '\n'; 
-		cin >> b;
-		cout << "b" << b << '\n';
-	}
-	catch(const char* s)
-	{
-		cout << s << endl;
-	}
+	cout << "Enter elements of vector 'a'" << '\n'; 
+	cin >> a;
+	cout << "a" << a << '\n';
+	
+	cout << "Enter elements of vector 'b'" << '\n'; 
+	cin >> b;
+	cout << "b" << b << '\n';
 	//////////////////////////////////////// M * v
 	try
 	{
@@ -165,4 +137,6 @@ void main()
 	if (a == b)
 		cout << "a == b" << '\n';
 	else cout << "a != b" << '\n';
+	ress = a;
+	cout << "ress = v " << ress << '\n';
 }
