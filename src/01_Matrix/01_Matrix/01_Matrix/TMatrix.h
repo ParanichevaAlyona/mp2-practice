@@ -1,13 +1,14 @@
 #ifndef TMATRIX_H
 #define TMATRIX_H
 
+#include <iomanip>
 #include "TVector.h"
 
 template <typename ValueType>
 class TMatrix: public TVector<TVector <ValueType> >
 {
 public:
-	explicit TMatrix(int);
+	explicit TMatrix(int size = 10);
 	TMatrix(const TMatrix&);
 	TMatrix(const TVector<TVector<ValueType> >&);
 	~TMatrix();
@@ -70,9 +71,11 @@ TMatrix<ValueType> TMatrix<ValueType>::operator = (const TMatrix& m)
 	{
 		return *this; 
 	}
+    ///
 	delete[] this->x;
 	this->size = m.size;
 	this->x = new TVector<ValueType>[m.size];
+    ///
 	for(int i = 0; i < size; i++)
 	{
 		this->x[i] = m.x[i];
@@ -177,8 +180,7 @@ bool TMatrix<ValueType>::operator == (const TMatrix<ValueType>& m) const
 template <typename ValueType>
 bool TMatrix<ValueType>::operator != (const TMatrix<ValueType>& m) const
 {
-	if (!(*this == m)) return true;
-	return false;
+	return (!(*this == m));
 }
 
 #endif
