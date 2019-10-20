@@ -19,15 +19,15 @@ int Priority(char o)
 		break;
 	case '-':
 		return 2;
+		break;
 	case '(':
-		//cout << o << '\n';
 		return 1;
+		break;
 	default:
 		cout << "Wrong Operation!" << o;
 		break;
 	}
 }
-
 
 double Calculator::Calculate(char* s)
 {
