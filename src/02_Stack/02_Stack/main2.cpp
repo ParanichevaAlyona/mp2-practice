@@ -5,7 +5,6 @@ using namespace std;
 
 void main()
 {
-
 	char* s;
 	s = new char[60];
 	cin.getline(s, 60);
