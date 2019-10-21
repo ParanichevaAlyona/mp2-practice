@@ -2,7 +2,12 @@
 #define TVECTOR_H
 
 #include <iostream>
+#include <iomanip>
+
 using namespace std;
+
+template<typename ValueType>
+class TMatrix;
 
 template <typename ValueType>
 class TVector
@@ -30,34 +35,28 @@ public:
 
 	const ValueType& operator[] (int ind) const;
 	ValueType& operator[] (int ind);
-
-	ValueType Size() const;
-
+	
 	friend istream& operator >> (istream& input, TVector& z)
 	{
 		for (int i = 0; i < z.size; i++)
-        input >> z.x[i];
-
-    return input;
+            input >> z.x[i];
+        return input;
 	}
 
 	friend ostream& operator << (ostream& output, const TVector& z)
 	{
-		if (z.size == 0)
-    {
-        output << "Empty";
+		for (int j = 0; j < z.StartIndex; j++)
+			output << setw(5) << setprecision(2) << right << " ";
+        for (int i = 0; i < z.size - 1; i++)
+        {
+            output << setw(5) << setprecision(2) << right << z[i];               
+        }
+        output << setw(5) << setprecision(2) << right << z[z.size - 1];
         return output;
-    }
-    output << "(";
-    for (int i = 0; i < z.size; i++)
-    {
-        if (i != z.size - 1)
-            output << z[i] << ", ";
-        else
-            output << z[i] << ")";
-    }
-    return output;
+		output << setw(z.StartIndex);
 	}
+
+	friend TMatrix<ValueType>;
 };
 
 //////////////////////////////////////////////////////////////
@@ -104,9 +103,13 @@ TVector<ValueType>& TVector<ValueType>::operator = (const TVector<ValueType>& z)
 	{
 		return *this; 
 	}
-	delete[] x;
-	size = z.size;
-	x = new ValueType[z.size];
+    if (size != z.size)
+    {
+        delete[] x;
+	    size = z.size;
+	    x = new ValueType[z.size];
+    }
+    StartIndex = z.StartIndex;
 	for(int i = 0; i < z.size; i++)
 		x[i] = z.x[i];
 	return *this;
@@ -142,30 +145,30 @@ TVector<ValueType> TVector<ValueType>::operator * (const ValueType a)
 template <typename ValueType>
 TVector<ValueType> TVector<ValueType>::operator + (const TVector<ValueType>& z)
 {
-	if(z.size != size)
-		throw "Different size";
+	if((z.size != size) || (z.StartIndex != StartIndex))
+		throw "Different size or startindex";
 	TVector<ValueType> res(z);
 	for (int i = 0; i < size; i++)
-		res.x[i] += x[i];
+		res.x[i] = res.x[i] + x[i];
 	return res;
 }
 
 template <typename ValueType>
 TVector<ValueType> TVector<ValueType>::operator - (const TVector<ValueType>& z)
 {
-	if(z.size != size)
-		throw "Different size";
+    if ((z.size != size) || (z.StartIndex != StartIndex))
+		throw "Different size or startindex";
 	TVector<ValueType> res(z);
 	for (int i = 0; i < size; i++)
-		res.x[i] -= x[i];
+		res.x[i] = res.x[i] - x[i]; 
 	return res;
 }
 
 template <typename ValueType>
 ValueType TVector<ValueType>::operator * (const TVector<ValueType>& z)
 {
-	if(z.size != size)
-		throw "Different size";
+    if ((z.size != size) || (z.StartIndex != StartIndex))
+		throw "Different size or startindex";
 	ValueType S = 0;
 	for(int i = 0; i < size; i++)
 		S += x[i] * z.x[i];
@@ -176,26 +179,18 @@ template <typename ValueType>
 bool TVector<ValueType>::operator == (const TVector<ValueType>& z) const
 {
 	if (size != z.size) return false;
-	int f = 0;
+	bool f = true;
 	for (int i = 0; i < size; i++)
 	{
-		if (x[i] != z.x[i]) f = 1;
+		if (x[i] != z.x[i]) f = false;
 	}
-	if (f == 1) return false;
-	return true;
+	return f;
 }
 
 template <typename ValueType>
 bool TVector<ValueType>::operator != (const TVector<ValueType>& z) const
 {
-	if (size != z.size) return true;
-	int f = 0;
-	for (int i = 0; i < size; i++)
-	{
-		if (x[i] != z.x[i]) f = 1;
-	}
-	if (f == 1) return true;
-	return false;
+	return (!(*this == z));
 }
 
 template <typename ValueType>
@@ -214,9 +209,4 @@ ValueType& TVector<ValueType>::operator[] (int ind)
 	return x[ind];
 }
 
-template<typename ValueType>
-ValueType TVector<ValueType>::Size() const 
-{
-    return size;
-}
 #endif
