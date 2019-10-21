@@ -1,13 +1,14 @@
 #ifndef TMATRIX_H
 #define TMATRIX_H
 
+#include <iomanip>
 #include "TVector.h"
 
 template <typename ValueType>
 class TMatrix: public TVector<TVector <ValueType> >
 {
 public:
-	explicit TMatrix(int);
+	explicit TMatrix(int size = 10);
 	TMatrix(const TMatrix&);
 	TMatrix(const TVector<TVector<ValueType> >&);
 	~TMatrix();
@@ -26,10 +27,6 @@ public:
 
 	friend istream& operator >> (istream& input, TMatrix& m)
 	{
-		if (m.size == 0)
-		{
-			throw "Size = 0";
-		}
 		for (int i = 0; i < m.size; i++)
 			input >> m.x[i];
 		return input;
@@ -37,11 +34,6 @@ public:
 
 	friend ostream& operator << (ostream& output, const TMatrix& m)
 	{
-		if (m.size == 0)
-		{
-			output << "Size = 0";
-			return output;
-		}
 		for (int i = 0; i < m.size; i++)
 		{
 			output << m.x[i] << '\n';
@@ -56,7 +48,7 @@ template <typename ValueType>
 TMatrix<ValueType>::TMatrix(int _size):TVector<TVector<ValueType> >(_size)
 {
 	size = _size;
-	for(int i = 0; i < size; i++)
+	for(int i = 0; i < this->size; i++)
 		this->x[i] = TVector<ValueType>(size - i, i);
 }
 
@@ -79,10 +71,13 @@ TMatrix<ValueType> TMatrix<ValueType>::operator = (const TMatrix& m)
 	{
 		return *this; 
 	}
-	delete[] this->x;
-	this->size = m.size;
-	this->x = new TVector<ValueType>[m.size];
-	for(int i = 0; i < size; i++)
+	if (this->size != m.size)
+	{
+		delete[] this->x;
+		this->size = m.size;
+		this->x = new TVector<ValueType>[m.size];
+	}
+	for(int i = 0; i < this->size; i++)
 	{
 		this->x[i] = m.x[i];
 	}
@@ -111,7 +106,7 @@ template <typename ValueType>
 TMatrix<ValueType> TMatrix<ValueType>::operator * (const ValueType a)
 {
 	TMatrix res(*this);
-	for(int i = 0; i < size; i++)
+	for(int i = 0; i < res.size; i++)
 		res.x[i] = x[i] * a;
 	return res;
 }
@@ -133,7 +128,7 @@ TMatrix<ValueType> TMatrix<ValueType>::operator - (const TMatrix<ValueType>& m)
 	if (this->size != m.size)
 		throw "Different size";
 	TMatrix<ValueType> res(*this);
-	for(int i = 0; i < size; i++)
+	for(int i = 0; i < res.size; i++)
 		res.x[i] = this->x[i] - m.x[i];
 	return res;
 }
@@ -159,7 +154,7 @@ TMatrix<ValueType> TMatrix<ValueType>::operator * (const TMatrix<ValueType>& m)
 template <typename ValueType>
 TVector<ValueType> TMatrix<ValueType>::operator * (const TVector<ValueType>& v)
 {
-	if (this->size != v.Size())
+	if (this->size != v.size)
 		throw "Different size";
 	TVector<ValueType> res(this->size);
 	res = res * 0;
@@ -176,8 +171,8 @@ template <typename ValueType>
 bool TMatrix<ValueType>::operator == (const TMatrix<ValueType>& m) const
 {
 	if (this->size != m.size)
-		throw "Different size";
-	for(int i = 0; i < size; i++)
+		return false;
+	for(int i = 0; i < this->size; i++)
 		if (x[i] != m.x[i])
 			return false;
 	return true;
@@ -186,12 +181,7 @@ bool TMatrix<ValueType>::operator == (const TMatrix<ValueType>& m) const
 template <typename ValueType>
 bool TMatrix<ValueType>::operator != (const TMatrix<ValueType>& m) const
 {
-	if (size != m.size)
-		return false;
-	for(int i = 0; i < size; i++)
-		if (x[i] != m.x[i])
-			return true;
-	return false;
+	return (!(*this == m));
 }
 
 #endif
