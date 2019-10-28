@@ -1,13 +1,16 @@
 #include <iostream>
+#include <string>
 #include "TStack.h"
 #include "HCalculator.h"
+
 using namespace std;
 
 void main()
 {
-	char* s;
-	s = new char[60];
-	cin.getline(s, 60);
+	std::string s, ss;
+	double res;
+	getline(cin, s);
 	cout << s << '\n';
-	cout << "The result is " << Calculator :: Calculate(s) << '\n';
+	ss = Calculator::Postfix(s);
+	//res = Calculator::Calculate(ss);
 }
