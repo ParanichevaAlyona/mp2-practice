@@ -67,7 +67,7 @@ std::string Calculator::Postfix(std::string s)
     return str;
 }
 
-double Calculator::Calculate(string ss)
+double Calculator::Calculate(std::string ss)
 {
     TStack<char> stack(20);
     for (int i = 0;i < ss.length(); i++)
