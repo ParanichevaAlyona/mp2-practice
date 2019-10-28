@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "TStack.h"
 #include "HCalculator.h"
 
@@ -10,30 +11,25 @@ int Priority(char o)
 	{
 	case '*' :
 		return 3;
-		break;
 	case '/':
 		return 3;
-		break;
 	case '+':
 		return 2;
-		break;
 	case '-':
 		return 2;
-		break;
 	case '(':
 		return 1;
-		break;
 	default:
 		cout << "Wrong Operation!" << o;
 		break;
 	}
 }
 
-double Calculator::Calculate(char* s)
+std::string Calculator::Postfix(std::string s)
 {
 	TStack<char> post(20);
 	TStack<char> stack(20);
-	for(int i = 0; i < strlen(s); i++)
+	for(int i = 0; i < s.length(); i++)
 	{
 		if (s[i] == '(')
 			stack.Push(s[i]);
@@ -61,45 +57,53 @@ double Calculator::Calculate(char* s)
 		tmp[i] = post.x[i];
 	cout << "Postfix form is: " << tmp << '\n';
 
-	while (!post.IsEmpty())
-		stack.Push(post.Pop());
-
-	TStack<double> res(20);
-	double n, a = 0, b = 0, sum = 0;
-	int k = stack.top;
-	for(int i = 0; i < k; i++)
-	{
-		if (isalpha(stack.Getlast()))
-		{
-			cout << stack.Getlast() << '\n';
-			cin >> n;
-			res.Push(n);
-		}
-		if (stack.Getlast() == '*') //a*(b+c-d)/e-f
-		{
-			sum = res.Pop() * res.Pop();
-			res.Push(sum);
-		}
-		if (stack.Getlast() == '+') 
-		{
-			sum = res.Pop() + res.Pop();
-			res.Push(sum);
-		}
-		if (stack.Getlast() == '-') 
-		{
-			b = res.Pop();
-			a = res.Pop();
-			sum = a - b;
-			res.Push(sum);
-		}
-		if (stack.Getlast() == '/') 
-		{
-			b = res.Pop();
-			a = res.Pop();
-			sum = a / b;
-			res.Push(sum);
-		}
-		stack.Pop();
-	}
-	return sum;
+	std::string str(tmp);
+	return str;
 }
+
+//double Calculator::Calculate(string ss)
+//{
+//	TStack<char> stack(20);
+//
+//	while (!ss.empty())
+//		stack.Push(post.Pop());
+//
+//	TStack<double> res(20);
+//	double n, a = 0, b = 0, sum = 0;
+//	int k = stack.top;
+//	for(int i = 0; i < k; i++)
+//	{
+//		if (isalpha(stack.Getlast()))
+//		{
+//			cout << stack.Getlast() << '\n';
+//			cin >> n;
+//			res.Push(n);
+//		}
+//		if (stack.Getlast() == '*') //a*(b+c-d)/e-f
+//		{
+//			sum = res.Pop() * res.Pop();
+//			res.Push(sum);
+//		}
+//		if (stack.Getlast() == '+') 
+//		{
+//			sum = res.Pop() + res.Pop();
+//			res.Push(sum);
+//		}
+//		if (stack.Getlast() == '-') 
+//		{
+//			b = res.Pop();
+//			a = res.Pop();
+//			sum = a - b;
+//			res.Push(sum);
+//		}
+//		if (stack.Getlast() == '/') 
+//		{
+//			b = res.Pop();
+//			a = res.Pop();
+//			sum = a / b;
+//			res.Push(sum);
+//		}
+//		stack.Pop();
+//	}
+//	cout << sum;
+//}
