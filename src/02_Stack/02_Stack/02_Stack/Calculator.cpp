@@ -54,15 +54,16 @@ std::string Calculator::Postfix(std::string s)
     while (!stack.IsEmpty())
         post.Push(stack.Pop());
     int max = post.Top();
-    char tmp[20];
-    for (int i = 0; i < max; i++)
-    {
-        tmp[i] = post.Pop();
-        i++;
-    }
-    cout << "Postfix form is: " << tmp << '\n';
 
-    std::string str(tmp);
+	char tmp[20];
+    for (int i = 0; i < max; i++)
+        tmp[i] = post.Pop();
+	for (int j = max; j < 20; j++)
+		tmp[j] = '\0';
+
+	std::string str = string(tmp);
+
+	cout << "Postfix form is: " << str << '\n';
     return str;
 }
 
