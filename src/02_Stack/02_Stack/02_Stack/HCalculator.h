@@ -6,10 +6,10 @@
 
 class Calculator
 {
-	static int Priority(char);
+    static int Priority(char);
 public:
-	static std::string Postfix(std::string);
-	static double Calculate(std::string);
+    static std::string Postfix(std::string);
+    static double Calculate(std::string);
 };
 
 #endif
