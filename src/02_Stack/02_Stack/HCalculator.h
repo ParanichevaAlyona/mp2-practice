@@ -1,14 +1,14 @@
-#ifndef CALCULATOR_H
 #define CALCULATOR_H
 
 #include "TStack.h"
+#include <string>
 
 class Calculator
 {
-private:
 	static int Priority(char);
 public:
-	static double Calculate(char*);
+	static std::string Postfix(std::string);
+	//static double Calculate(std::string);
 };
 
 #endif
