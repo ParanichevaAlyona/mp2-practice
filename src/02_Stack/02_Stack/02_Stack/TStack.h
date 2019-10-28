@@ -20,7 +20,6 @@ public:
     bool IsFull()const;
     int Top()const;
     ValueType Getlast()const;
-    int GetMaxsize()const;
 };
 
 /////////////////////////////////////////
@@ -94,9 +93,4 @@ ValueType TStack<ValueType>::Getlast()const
     return x[top - 1];
 }
 
-template<class ValueType>
-int TStack<ValueType>::GetMaxsize()const
-{
-    return maxsize;
-}
 #endif
