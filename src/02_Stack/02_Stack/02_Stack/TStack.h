@@ -15,7 +15,7 @@ public:
     ~TStack();
 
     void Push(ValueType);
-    ValueType Pop();
+    void Pop(); // void pop
     bool IsEmpty()const;
     bool IsFull()const;
     int Top()const;
@@ -63,10 +63,10 @@ void TStack<ValueType>::Push(ValueType a) {
 }
 
 template<typename ValueType>
-ValueType TStack<ValueType>::Pop() {
+void TStack<ValueType>::Pop() {
     if (IsEmpty())
         throw "The stack is empty";
-    return x[--top];
+    x[--top];
 }
 
 template<typename ValueType>
