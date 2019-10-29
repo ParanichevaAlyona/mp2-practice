@@ -25,8 +25,6 @@ int Calculator::Priority(char o)
     }
 }
 
-
-
 std::string Calculator::Postfix(std::string s)
 {
     TStack<char> post(20);
@@ -41,28 +39,39 @@ std::string Calculator::Postfix(std::string s)
         {
             if (!stack.IsEmpty())
                 if (Priority(stack.Getlast()) >= Priority(s[i]))
-                    post.Push(stack.Pop());
+				{
+                    post.Push(stack.Getlast());
+					stack.Pop();
+				}
             stack.Push(s[i]);
         }
         if (s[i] == ')')
         {
             while (stack.Getlast() != '(')
-                post.Push(stack.Pop());
+			{
+				post.Push(stack.Getlast());
+				stack.Pop();
+			}
             stack.Pop();
         }
     }
     while (!stack.IsEmpty())
-        post.Push(stack.Pop());
+	{
+		post.Push(stack.Getlast());
+		stack.Pop();
+	}
     int max = post.Top();
 
 	char tmp[20];
     for (int i = 0; i < max; i++)
-        tmp[i] = post.Pop();
-    for (int j = max; j < 20; j++)
-	tmp[j] = '\0';
+	{
+		tmp[i] = post.Getlast();
+		post.Pop();
+	}
+	for (int j = max; j < 20; j++)
+		tmp[j] = '\0';
 
 	std::string str = string(tmp);
-
 	cout << "Postfix form is: " << str << '\n';
     return str;
 }
@@ -86,25 +95,37 @@ double Calculator::Calculate(std::string ss)
         }
         if (stack.Getlast() == '*')
         {
-            sum = res.Pop() * res.Pop();
+			b = res.Getlast();
+			res.Pop();
+			a = res.Getlast();
+			res.Pop();
+            sum = a * b;
             res.Push(sum);
         }
         if (stack.Getlast() == '+')
         {
-            sum = res.Pop() + res.Pop();
+			b = res.Getlast();
+			res.Pop();
+			a = res.Getlast();
+			res.Pop();
+            sum = a + b;
             res.Push(sum);
         }
         if (stack.Getlast() == '-')
         {
-            b = res.Pop();
-            a = res.Pop();
+			b = res.Getlast();
+			res.Pop();
+			a = res.Getlast();
+			res.Pop();
             sum = a - b;
             res.Push(sum);
         }
         if (stack.Getlast() == '/')
         {
-            b = res.Pop();
-            a = res.Pop();
+            b = res.Getlast();
+			res.Pop();
+			a = res.Getlast();
+			res.Pop();
             sum = a / b;
             res.Push(sum);
         }
