@@ -9,7 +9,7 @@ class Calculator
     static int Priority(char);
 public:
     static std::string Postfix(std::string);
-    static double Calculate(std::string);
+    static double Calculate(std::string, char*);
 };
 
 #endif
