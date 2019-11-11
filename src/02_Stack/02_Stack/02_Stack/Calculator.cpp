@@ -38,18 +38,18 @@ std::string Calculator::Postfix(std::string s)
         if ((s[i] == '*') || (s[i] == '/') || (s[i] == '+') || (s[i] == '-'))
         {
             if (!stack.IsEmpty())
-                if (Priority(stack.Getlast()) >= Priority(s[i]))
+                if (Priority(stack.Top()) >= Priority(s[i]))
 				{
-                    post.Push(stack.Getlast());
+                    post.Push(stack.Top());
 					stack.Pop();
 				}
             stack.Push(s[i]);
         }
         if (s[i] == ')')
         {
-            while (stack.Getlast() != '(')
+            while (stack.Top() != '(')
 			{
-				post.Push(stack.Getlast());
+				post.Push(stack.Top());
 				stack.Pop();
 			}
             stack.Pop();
@@ -57,18 +57,21 @@ std::string Calculator::Postfix(std::string s)
     }
     while (!stack.IsEmpty())
 	{
-		post.Push(stack.Getlast());
+		post.Push(stack.Top());
 		stack.Pop();
 	}
-    int max = post.Top();
+
+
 
 	char tmp[20];
-    for (int i = 0; i < max; i++)
-	{
-		tmp[i] = post.Getlast();
-		post.Pop();
-	}
-	for (int j = max; j < 20; j++)
+    int i = 0;
+    while (!post.IsEmpty())
+    {
+        tmp[i] = post.Top();
+        post.Pop();
+        i++;
+    }
+	for (int j = i; j < 20; j++)
 		tmp[j] = '\0';
 
 	std::string str = string(tmp);
@@ -76,7 +79,7 @@ std::string Calculator::Postfix(std::string s)
     return str;
 }
 
-double Calculator::Calculate(std::string ss)
+double Calculator::Calculate(std::string ss, char* tmp)
 {
     TStack<char> stack(20);
     for (int i = 0;i < ss.length(); i++)
@@ -87,44 +90,44 @@ double Calculator::Calculate(std::string ss)
     int k = stack.Top();
     for (int i = 0; i < k; i++)
     {
-        if (isalpha(stack.Getlast()))
+        if (isalpha(stack.Top()))
         {
-            cout << stack.Getlast() << '\n';
+            cout << stack.Top() << '\n';
             cin >> n;
             res.Push(n);
         }
-        if (stack.Getlast() == '*')
+        if (stack.Top() == '*')
         {
-			b = res.Getlast();
+			b = res.Top();
 			res.Pop();
-			a = res.Getlast();
+			a = res.Top();
 			res.Pop();
             sum = a * b;
             res.Push(sum);
         }
-        if (stack.Getlast() == '+')
+        if (stack.Top() == '+')
         {
-			b = res.Getlast();
+			b = res.Top();
 			res.Pop();
-			a = res.Getlast();
+			a = res.Top();
 			res.Pop();
             sum = a + b;
             res.Push(sum);
         }
-        if (stack.Getlast() == '-')
+        if (stack.Top() == '-')
         {
-			b = res.Getlast();
+			b = res.Top();
 			res.Pop();
-			a = res.Getlast();
+			a = res.Top();
 			res.Pop();
             sum = a - b;
             res.Push(sum);
         }
-        if (stack.Getlast() == '/')
+        if (stack.Top() == '/')
         {
-            b = res.Getlast();
+            b = res.Top();
 			res.Pop();
-			a = res.Getlast();
+			a = res.Top();
 			res.Pop();
             sum = a / b;
             res.Push(sum);
