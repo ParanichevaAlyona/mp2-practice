@@ -18,8 +18,7 @@ public:
     void Pop(); // void pop
     bool IsEmpty()const;
     bool IsFull()const;
-    int Top()const;
-    ValueType Getlast()const;
+    ValueType Top()const;
 };
 
 /////////////////////////////////////////
@@ -82,13 +81,7 @@ bool TStack<ValType>::IsFull() const
 }
 
 template<class ValueType>
-int TStack<ValueType>::Top()const
-{
-    return top;
-};
-
-template<class ValueType>
-ValueType TStack<ValueType>::Getlast()const
+ValueType TStack<ValueType>::Top()const
 {
     return x[top - 1];
 }
