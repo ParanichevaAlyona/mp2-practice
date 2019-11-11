@@ -13,6 +13,10 @@ void main()
 	getline(cin, s);
 	cout << s << '\n';
 	ss = Calculator::Postfix(s);
-	res = Calculator::Calculate(ss);
+	char tmp[20];
+
+
+	cout << '\n';
+	res = Calculator::Calculate(ss, tmp);
 	cout << res << '\n';
 }
