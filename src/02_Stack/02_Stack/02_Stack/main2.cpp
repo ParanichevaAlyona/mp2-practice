@@ -12,11 +12,21 @@ void main()
 	cout << "~~~~~ Welcome. This is a calculator with brackets ~~~~~" <<'\n';
 	getline(cin, s);
 	cout << s << '\n';
-	ss = Calculator::Postfix(s);
-	char tmp[20];
-
-
-	cout << '\n';
-	res = Calculator::Calculate(ss, tmp);
-	cout << res << '\n';
+	try
+	{
+		ss = Calculator::Postfix(s);
+	}
+	catch(const char* sms)
+	{
+		cout << sms << endl;
+	}
+	char* let = new char[ss.length()];
+	double* val = new double[ss.length()];
+	int n;
+	Calculator::GettingValues(ss, let, val, n);
+	res = Calculator::Calculate(ss, let, val, n);
+	
+	cout << "The result is "<< res << '\n';
+	delete let;
+	delete val;
 }
