@@ -20,13 +20,13 @@ void main()
 	{
 		cout << sms << endl;
 	}
-	char* let = new char[ss.length()];
-	double* val = new double[ss.length()];
+	char* let;
+	double* val;
 	int n;
 	Calculator::GettingValues(ss, let, val, n);
 	res = Calculator::Calculate(ss, let, val, n);
 	
 	cout << "The result is "<< res << '\n';
-	delete let;
-	delete val;
+	delete[] let;
+	delete[] val;
 }
