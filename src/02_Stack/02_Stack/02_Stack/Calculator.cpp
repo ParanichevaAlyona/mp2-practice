@@ -135,7 +135,7 @@ double Calculator::Calculate(std::string str, char* let, double* val, int n)
 					op.Pop(); 
 				}
         }
-		if (str[i] == '*')
+		if (tmp == '*')
         {
 			b = stack.Top();
 			stack.Pop();
@@ -144,7 +144,7 @@ double Calculator::Calculate(std::string str, char* let, double* val, int n)
             sum = a * b;
 			stack.Push(sum);
         }
-        if (str[i] == '+')
+        if (tmp == '+')
         {
 			b = stack.Top();
 			stack.Pop();
@@ -153,7 +153,7 @@ double Calculator::Calculate(std::string str, char* let, double* val, int n)
             sum = a + b;
 			stack.Push(sum);
         }
-        if (str[i] == '-')
+        if (tmp == '-')
         {
 			b = stack.Top();
 			stack.Pop();
@@ -162,7 +162,7 @@ double Calculator::Calculate(std::string str, char* let, double* val, int n)
             sum = a - b;
 			stack.Push(sum);
         }
-        if (str[i] == '/')
+        if (tmp == '/')
         {
             b = stack.Top();
 			stack.Pop();
