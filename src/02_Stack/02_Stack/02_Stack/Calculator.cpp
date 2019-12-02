@@ -79,14 +79,21 @@ std::string Calculator::Postfix(std::string s)
 
 
 	std::string str = string(tmp);
+	for (int j = 0; j < i / 2; j++)
+		swap(str[j], str[i - j - 1]);
 	cout << "Postfix form is: " << str << '\n';
     return str;
 }
 
 void Calculator::GettingValues(std::string str, char*& let, double*& val, int& n)
 {
-	
+	n = 0;
+	for (int i = 0; i < str.length(); i++)
+		if (isalpha(str[i]))
+			n++;
 	int f;
+	let = new char[n];
+	val = new double[n];
 	n = 0;
 	for (int i = 0; i < str.length(); i++)
 	{
@@ -104,7 +111,6 @@ void Calculator::GettingValues(std::string str, char*& let, double*& val, int& n
 		}
 	}
 
-
 	for (int i = 0; i < n; i++)
 	{
 		cout << let[i] << '\n';
@@ -116,23 +122,18 @@ double Calculator::Calculate(std::string str, char* let, double* val, int n)
 {
     TStack<double> stack(str.length());
 	
-	TStack<char> op(str.length());
-	for (int i = 0; i < str.length(); i++)
-		op.Push(str[i]);
 	char tmp;
     double a = 0, b = 0, sum = 0;
-    for (int i = 0; i < str.length(); i++)
-    {
-		tmp = op.Top(); 
+	for (int i = 0; i < str.length(); i++)
+	{
+		tmp = str[i];
 		if (isalpha(tmp))
         {
 			for (int j = 0; j < n; j++)
 				if (tmp == let[j])
 				{
-					cout << let[j];
-					cout << val[j] << endl;
 					stack.Push(val[j]);
-					op.Pop(); 
+					break; 
 				}
         }
 		if (tmp == '*')
