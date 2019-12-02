@@ -27,6 +27,9 @@ int Calculator::Priority(char o)
 
 std::string Calculator::Postfix(std::string s)
 {
+	if (s[0] == ')')
+		throw "Wrong line";
+	int n = 0;
     TStack<char> post(20);
     TStack<char> stack(20);
     for (int i = 0; i < s.length(); i++)
@@ -34,7 +37,9 @@ std::string Calculator::Postfix(std::string s)
         if (s[i] == '(')
             stack.Push(s[i]);
         if (isalpha(s[i]))
+		{
             post.Push(s[i]);
+		}
         if ((s[i] == '*') || (s[i] == '/') || (s[i] == '+') || (s[i] == '-'))
         {
             if (!stack.IsEmpty())
@@ -61,8 +66,6 @@ std::string Calculator::Postfix(std::string s)
 		stack.Pop();
 	}
 
-
-
 	char tmp[20];
     int i = 0;
     while (!post.IsEmpty())
@@ -74,65 +77,101 @@ std::string Calculator::Postfix(std::string s)
 	for (int j = i; j < 20; j++)
 		tmp[j] = '\0';
 
+
 	std::string str = string(tmp);
 	cout << "Postfix form is: " << str << '\n';
     return str;
 }
 
-double Calculator::Calculate(std::string ss, char* tmp)
+void Calculator::GettingValues(std::string str, char*& let, double*& val, int& n)
 {
-    TStack<char> stack(20);
-    for (int i = 0;i < ss.length(); i++)
-        stack.Push(ss[i]);
+	
+	int f;
+	n = 0;
+	for (int i = 0; i < str.length(); i++)
+	{
+		if (isalpha(str[i]))
+		{
+			f = 0;
+			for (int j = 0; j < n; j++)
+				if (str[i] == let[j])
+					f++;
+			if (f == 0)
+			{
+				let[n] = str[i];
+				n++;
+			}
+		}
+	}
 
-    TStack<double> res(20);
-    double n, a = 0, b = 0, sum = 0;
-    int k = stack.Top();
-    for (int i = 0; i < k; i++)
+
+	for (int i = 0; i < n; i++)
+	{
+		cout << let[i] << '\n';
+		cin >> val[i];
+	}
+}
+
+double Calculator::Calculate(std::string str, char* let, double* val, int n)
+{
+    TStack<double> stack(str.length());
+	
+	TStack<char> op(str.length());
+	for (int i = 0; i < str.length(); i++)
+		op.Push(str[i]);
+	char tmp;
+    double a = 0, b = 0, sum = 0;
+    for (int i = 0; i < str.length(); i++)
     {
-        if (isalpha(stack.Top()))
+		tmp = op.Top(); 
+		if (isalpha(tmp))
         {
-            cout << stack.Top() << '\n';
-            cin >> n;
-            res.Push(n);
+			for (int j = 0; j < n; j++)
+				if (tmp == let[j])
+				{
+					cout << let[j];
+					cout << val[j] << endl;
+					stack.Push(val[j]);
+					op.Pop(); 
+				}
         }
-        if (stack.Top() == '*')
+		if (str[i] == '*')
         {
-			b = res.Top();
-			res.Pop();
-			a = res.Top();
-			res.Pop();
+			b = stack.Top();
+			stack.Pop();
+			a = stack.Top();
+			stack.Pop();
             sum = a * b;
-            res.Push(sum);
+			stack.Push(sum);
         }
-        if (stack.Top() == '+')
+        if (str[i] == '+')
         {
-			b = res.Top();
-			res.Pop();
-			a = res.Top();
-			res.Pop();
+			b = stack.Top();
+			stack.Pop();
+			a = stack.Top();
+			stack.Pop();
             sum = a + b;
-            res.Push(sum);
+			stack.Push(sum);
         }
-        if (stack.Top() == '-')
+        if (str[i] == '-')
         {
-			b = res.Top();
-			res.Pop();
-			a = res.Top();
-			res.Pop();
+			b = stack.Top();
+			stack.Pop();
+			a = stack.Top();
+			stack.Pop();
             sum = a - b;
-            res.Push(sum);
+			stack.Push(sum);
         }
-        if (stack.Top() == '/')
+        if (str[i] == '/')
         {
-            b = res.Top();
-			res.Pop();
-			a = res.Top();
-			res.Pop();
+            b = stack.Top();
+			stack.Pop();
+			a = stack.Top();
+			stack.Pop();
             sum = a / b;
-            res.Push(sum);
-        }
-        stack.Pop();
+			stack.Push(sum);
+			cout << sum << endl;
+		}
     }
     return sum;
 }
