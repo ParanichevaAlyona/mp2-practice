@@ -9,7 +9,8 @@ class Calculator
     static int Priority(char);
 public:
     static std::string Postfix(std::string);
-    static double Calculate(std::string, char*);
+	static void GettingValues(std::string, char*&, double*&, int&);
+    static double Calculate(std::string str, char* let, double* val, int n);
 };
 
 #endif
