@@ -8,8 +8,9 @@ class Calculator
 {
     static int Priority(char);
 public:
+    static bool Mistakes(std::string);
     static std::string Postfix(std::string);
-	static void GettingValues(std::string, char*&, double*&, int&);
+    static void GettingValues(std::string, char*&, double*&, int&);
     static double Calculate(std::string str, char* let, double* val, int n);
 };
 
