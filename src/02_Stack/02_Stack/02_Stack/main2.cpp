@@ -14,19 +14,21 @@ void main()
 	cout << s << '\n';
 	try
 	{
-		ss = Calculator::Postfix(s);
+		if (Calculator::Mistakes(s) == true)
+			ss = Calculator::Postfix(s);
+		char* let;
+		double* val;
+		int n;
+		Calculator::GettingValues(ss, let, val, n);
+		res = Calculator::Calculate(ss, let, val, n);
+	
+		cout << "The result is "<< res << '\n';
+		delete[] let;
+		delete[] val;
 	}
 	catch(const char* sms)
 	{
 		cout << sms << endl;
 	}
-	char* let;
-	double* val;
-	int n;
-	Calculator::GettingValues(ss, let, val, n);
-	res = Calculator::Calculate(ss, let, val, n);
 	
-	cout << "The result is "<< res << '\n';
-	delete[] let;
-	delete[] val;
 }
