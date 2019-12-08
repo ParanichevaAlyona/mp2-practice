@@ -25,10 +25,45 @@ int Calculator::Priority(char o)
     }
 }
 
+bool Calculator::Mistakes(std::string s)
+{
+	if (s.length() == 0)
+		throw "The line is empty";
+	if (s[0] == ')')
+		throw "You cannot start with a bracket )";
+	int r = 0, l = 0, a = 0, o = 0;
+	for (int i = 0; i < s.length(); i++)
+	{
+		if (s[i] == '(')
+		{
+			if (i != 0)
+				if (s[i - 1] == ')')
+					throw "Brackets together )(";
+			r++;
+		}
+		if (s[i] == ')')
+		{
+			if (i != 0)
+				if (s[i - 1] == '(')
+					throw "Brackets together ()";
+			l++;
+		}
+		if (isalpha(s[i]))
+			a++;
+		if ((s[i] == '*') || (s[i] == '/') || (s[i] == '+') || (s[i] == '-'))
+			o++;
+	}
+	if ((r > l) || (l > r))
+		throw "Different number of brackets";
+	if (o >= a)
+		throw "Not enough operands";
+	if ((o + 1) != a)
+		throw "Too mach operands";
+	return true;
+}
+
 std::string Calculator::Postfix(std::string s)
 {
-	if (s[0] == ')')
-		throw "Wrong line";
 	int n = 0;
     TStack<char> post(20);
     TStack<char> stack(20);
@@ -171,7 +206,6 @@ double Calculator::Calculate(std::string str, char* let, double* val, int n)
 			stack.Pop();
             sum = a / b;
 			stack.Push(sum);
-			cout << sum << endl;
 		}
     }
     return sum;
