@@ -3,58 +3,162 @@
 
 using namespace std;
 
-void main()
+void finsertend()
 {
-	char* p = "privet";
-	char* k = "kak";
-	char* d = "dela";
-	char* m = "Masha";
-
-	TNode<char, int>  privet(1, p, 0);
-	TNode<char, int>  kak(2, k, 0);
-	TNode<char, int>  dela(3, d, 0);
-	TNode<char, int>  Masha(4, m, 0);
+	cout << "InsertEnd function:" << endl;
+	char* o = "one";
+	char* t = "two";
+	char* th = "three";
+	char* f = "four";
 
 	TList<char, int> list;
-	//Back
-	list.Back(kak.key, kak.pData);
-	//Push
-	list.Push(privet.key, privet.pData);
-	//InsertAfter
-	try
-	{
-		list.InsertAfter(kak.key, dela.pData, dela.key);
-	}
-	catch(const char* s)
-	{
-		cout << s << endl;
-	}
-	
-	//InsertBefore
-	try
-	{
-		list.InsertBefore(privet.key, Masha.pData, Masha.key);
-	}
-	catch(const char* s)
-	{
-		cout << s << endl;
-	}
+	list.InsertEnd(1, o);
+	list.InsertEnd(2, t);
+	list.InsertEnd(3, th);
+	list.InsertEnd(4, f);
+	cout << list << endl;
+}
 
-	list.Print();
-	try/////catch the exception
+void finserfirst()
+{
+	cout << "InsertFirst function:" << endl;
+	char* o = "one";
+	char* t = "two";
+	char* th = "three";
+	char* f = "four";
+
+	TList<char, int> list;
+	list.InsertFirst(1, o);
+	list.InsertFirst(2, t);
+	list.InsertFirst(3, th);
+	list.InsertFirst(4, f);
+	cout << list << endl;
+}
+
+void finsafter()
+{
+	cout << "InsertAfter function:" << endl;
+	char* o = "one";
+	char* t = "two";
+	char* th = "three";
+	char* f = "four";
+
+	TList<char, int> list;
+	
+	try
 	{
-		list.InsertBefore(10, Masha.pData, Masha.key);
+		list.InsertFirst(1, o);
+		list.InsertAfter(1, t, 2);
+		list.InsertAfter(2, th, 3);
+		list.InsertAfter(3, f, 4);
 	}
-	catch(const char* s)
+	catch(int k)
 	{
-		cout << s << endl;
+		if (k == -1)
+			cout << "You reached the end" << endl;
+		if (k == -2)
+			cout << "The list is empty" << endl;
+		else
+			cout << "The list doesn't contain an elem with this key - " << k << endl;
 	}
-	try/////catch the exception
+	cout << list << endl;
+	try
 	{
-		list.InsertAfter(10, dela.pData, dela.key);
+		list.InsertAfter(5, t, 2);
+
 	}
-	catch(const char* s)
+	catch(int k)
 	{
-		cout << s << endl;
+		if (k == -1)
+			cout << "You reached the end" << endl;
+		if (k == -2)
+			cout << "The list is empty" << endl;
+		else
+			cout << "The list doesn't contain an elem with this key - " << k << endl;
 	}
+}
+void finsbefore()
+{
+	cout << "InsertBefore function:" << endl;
+	char* o = "one";
+	char* t = "two";
+	char* th = "three";
+	char* f = "four";
+
+	TList<char, int> list;
+	
+	
+	try
+	{
+		list.InsertFirst(1, o);
+		list.InsertBefore(1, t, 2);
+		list.InsertBefore(2, th, 3);
+		list.InsertBefore(3, f, 4);
+	}
+	catch(int k)
+	{
+		if (k == -1)
+			cout << "You reached the end" << endl;
+		if (k == -2)
+			cout << "The list is empty" << endl;
+		else
+			cout << "The list doesn't contain an elem with this key - " << k << endl;
+	}
+	cout << list << endl;
+	try
+	{
+		list.InsertBefore(5, t, 2);
+
+	}
+	catch(int k)
+	{
+		if (k == -1)
+			cout << "You reached the end" << endl;
+		if (k == -2)
+			cout << "The list is empty" << endl;
+		else
+			cout << "The list doesn't contain an elem with this key - " << k << endl;
+	}
+}
+void fremove()
+{
+	cout << "the list before remove:" << endl;
+	char* o = "one";
+	char* t = "two";
+	char* th = "three";
+	char* f = "four";
+
+	TList<char, int> list;
+	list.InsertEnd(1, o);
+	list.InsertEnd(2, t);
+	list.InsertEnd(3, th);
+	list.InsertEnd(4, f);
+	cout << list << endl;
+	try
+	{
+		list.Remove(1); 
+		list.Remove(3);
+		list.Remove(4);
+		list.Remove(5);
+	}
+	catch(int k)
+	{
+		if (k == -1)
+			cout << "You reached the end" << endl;
+		if (k == -2)
+			cout << "The list is empty" << endl;
+		else
+			cout << "The list doesn't contain an elem with this key - " << k << endl;
+	}	
+	cout << "the list after remove:" << endl;
+	cout << list << endl; 
+}
+
+void main()
+{
+	finsertend();
+	finserfirst();
+	finsafter();
+	finsbefore();
+	fremove();
 }
