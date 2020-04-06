@@ -15,33 +15,33 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\..\Downloads\pol\main.cpp">
+    <ClCompile Include="main.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\pol\TSList.cpp">
+    <ClCompile Include="Polinom.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\pol\TMonom.cpp">
+    <ClCompile Include="TSList.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Downloads\pol\Polinom.cpp">
+    <ClCompile Include="TMonom.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\Downloads\pol\Polinom.h">
+    <ClInclude Include="TNode.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Downloads\pol\TList.h">
+    <ClInclude Include="Polinom.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Downloads\pol\TNode.h">
+    <ClInclude Include="TMonom.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Downloads\pol\TMonom.h">
+    <ClInclude Include="TSList.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Downloads\pol\TSList.h">
+    <ClInclude Include="TList.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
